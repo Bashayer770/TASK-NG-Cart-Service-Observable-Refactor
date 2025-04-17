@@ -1,37 +1,37 @@
 import { Component } from '@angular/core';
-import { CartService } from '../../services/cart.service';
-import { Product } from '../../../data/products';
-import { AsyncPipe, CurrencyPipe } from '@angular/common';
+import { CartItem, CartService } from '../../services/cart.service';
+import { CommonModule, CurrencyPipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CurrencyPipe, AsyncPipe],
+  imports: [CurrencyPipe, CommonModule, RouterLink],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css',
 })
 export class CartComponent {
-  cart$ = this.cartService.cart$;
+  cart = this.cartService.cart;
 
   constructor(private cartService: CartService) {}
 
-  increment(item: Product) {
-    this.cartService.incrementQuantity(item.id);
+  increment(id: number) {
+    this.cartService.incrementQuantity(id);
   }
 
-  decrement(item: Product) {
-    this.cartService.decrementQuantity(item.id);
+  decrement(id: number) {
+    this.cartService.decrementQuantity(id);
   }
 
-  remove(item: Product) {
-    this.cartService.removeFromCart(item.id);
+  remove(id: number) {
+    this.cartService.removeFromCart(id);
   }
 
   clearCart() {
     this.cartService.clearCart();
   }
 
-  getTotal() {
+  getTotal(): number {
     return this.cartService.getTotal();
   }
 }

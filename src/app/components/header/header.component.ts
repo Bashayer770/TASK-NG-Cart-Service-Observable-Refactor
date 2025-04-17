@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, computed } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { CartItem, CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-header',
@@ -8,4 +9,9 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
-export class HeaderComponent {}
+export class HeaderComponent {
+  cartCount = computed(() =>
+    this.cartService.cart().reduce((total, item) => total + item.quantity, 0)
+  );
+  constructor(private cartService: CartService) {}
+}
